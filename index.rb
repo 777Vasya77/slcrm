@@ -1,6 +1,7 @@
 require 'watir'
 require 'selenium-webdriver'
 require 'dotenv'
+require 'pry'
 
 # Choose the right fitness club
 Dotenv.load('m.env')
@@ -32,12 +33,13 @@ clients_id.each do |id|
 
     browser.text_field(id: 'inputId').set(id)
     browser.td(text: id.to_s).wait_until_present
-    
+
+    sleep 2
     browser.link(title: "Редактировать").click
 
-    browser.select_list(name: 'rowstatus').select!("3")
-    browser.button(value: "Сохранить").click
+    browser.div(class: 'alert-danger').wait_until_present
+    browser.div(id: "modal-edit").select_list(name: "rowstatus").select("3")
+    browser.button(class: "form-submit").click
 
     puts "Done - #{id}"
-
 end
