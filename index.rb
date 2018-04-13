@@ -21,7 +21,7 @@ browser.text_field(id: 'username').set(ENV['LOGIN'])
 browser.text_field(id: 'password').set(ENV['PASSWORD'])
 browser.span(id: 'submit').click
 
-puts 'Log in to CRM'
+puts "Log in to CRM #{ENV['LOCATION']}"
 
 # Go to /customers
 browser.link(visible_text: "Клиенты").click
