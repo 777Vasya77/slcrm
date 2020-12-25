@@ -1,19 +1,15 @@
 require 'watir'
-require 'selenium-webdriver'
+require 'webdrivers'
 require 'dotenv'
 require 'pry'
 
 # Choose the right fitness club
 Dotenv.load('m.env')
-# Dotenv.load('u.env')
 
 # Insert customers id here 
 clients_id = []
 
-caps = Selenium::WebDriver::Remote::Capabilities.chrome(:chrome_options => {detach: true})
-Selenium::WebDriver::Chrome.driver_path="/Users/ponomarenko/Documents/web/slcrm/chromedriver"
-browser = Watir::Browser.new:chrome, desired_capabilities: caps
-
+browser = Watir::Browser.new
 browser.goto "https://crm.sportlifedigital.com/login"
 
 puts 'Open Chrome'
