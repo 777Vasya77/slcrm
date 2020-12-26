@@ -26,16 +26,34 @@ browser.link(visible_text: "Клиенты").click
 puts 'Go to customers page'
 
 clients_id.each do |id|
+    isIdExist = true
+    isUserDataCorrect = true
 
     browser.text_field(id: 'inputId').set(id)
-    browser.td(text: id.to_s).wait_until_present
+    isIdExist = browser.td(text: id.to_s).wait_until(timeout: 10, &:present?) rescue false
+
+    if !isIdExist
+        puts "#{id} - НЕ НАЙДЕН!"
+        next
+    end
 
     sleep 2
     browser.link(title: "Редактировать").click
 
-    browser.div(class: 'alert-danger').wait_until_present
+    browser.div(class: 'alert-danger').wait_until
     browser.div(id: "modal-edit").select_list(name: "rowstatus").select("3")
-    browser.button(class: "form-submit").click
 
-    puts "Done - #{id}"
+    isUserDataCorrect = browser.button(class: "form-submit").click rescue false
+    if !isUserDataCorrect
+        puts "#{id} - НЕ ПОЛНЫЕ АНКЕТНЫЕ ДАННЫЕ!"
+        modal = browser.div(id: "modal-edit")
+        header = modal.child(class: "modal-header")
+        btn = header.child(class: "close")
+        btn.click
+        next
+    end
+
+    puts "#{id} - УДАЛЕН!"
 end
+
+browser.close
