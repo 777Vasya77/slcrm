@@ -7,7 +7,7 @@ require 'pry'
 Dotenv.load('m.env')
 
 # Insert customers id here 
-clients_id = []
+clients_id = [775297, 2720712, 873407, 873407, 71281]
 
 browser = Watir::Browser.new
 browser.goto "https://crm.sportlifedigital.com/login"
@@ -25,6 +25,7 @@ browser.link(visible_text: "Клиенты").click
 
 puts 'Go to customers page'
 
+not_exist = []
 clients_id.each do |id|
     isIdExist = true
     isUserDataCorrect = true
@@ -34,6 +35,7 @@ clients_id.each do |id|
 
     if !isIdExist
         puts "#{id} - НЕ НАЙДЕН!"
+        not_exist.push("#{id} - НЕ НАЙДЕН!")
         next
     end
 
@@ -55,5 +57,8 @@ clients_id.each do |id|
 
     puts "#{id} - УДАЛЕН!"
 end
+
+puts "<< ОТЧЕТ: не найдено >>"
+puts not_exist
 
 browser.close
