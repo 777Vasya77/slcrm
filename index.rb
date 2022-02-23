@@ -4,7 +4,7 @@ require 'dotenv'
 require 'pry'
 
 # Choose the right fitness club
-Dotenv.load('m.env')
+Dotenv.load('.env')
 
 # Insert customers id here 
 clients_id = []
